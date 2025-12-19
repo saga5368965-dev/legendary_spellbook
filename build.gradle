@@ -1,10 +1,10 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 plugins {
@@ -13,6 +13,8 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
+
+apply plugin: 'org.spongepowered.mixin'
 
 version = mod_version
 group = mod_group_id
@@ -136,7 +138,10 @@ repositories {
         }
     }
     // 3. ISS用
-    maven { url = "https://code.redspace.io/releases" }
+    maven {
+        name = "Iron's Maven - Release"
+        url = "https://code.redspace.io/releases"
+    }
     maven { url = "https://maven.minecraftforge.net" }
 
     mavenCentral()
@@ -147,44 +152,29 @@ dependencies {
     // The "userdev" classifier will be requested and setup by ForgeGradle.
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
-    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"# Gradle
-            .gradle
-    build/
-
-    # IDE
-            .idea
-            *.iml
-            *.iws
-
-    # Minecraft Run
-    run/
-            !run/config/ # 設定ファイルだけは共有してもOK
-
-    # OS
-            .DS_Store
-    Thumbs.db
+    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}" //# Gradle
     implementation fg.deobf("curse.maven:curios-309927:6418456")
     implementation fg.deobf("curse.maven:playeranimator-658587:4587214")
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
     implementation("com.eliotlash.mclib:mclib:20")
     implementation fg.deobf("curse.maven:caelus-308989:5281700")
-    implementation fg.deobf("io.redspace.ironsspellbooks:irons_spellbooks:1.20.1-3.4.0.11")
+    implementation fg.deobf("io.redspace.ironsspellbooks:irons_spellbooks:${irons_spells_version}")
     implementation fg.deobf("curse.maven:legendary-monsters-944035:6776766")
-    }
-    // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
-    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-    // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
-    // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
-    // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+}
+// Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
+// The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
+// compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
+// compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
+// runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
-    // Example mod dependency using a mod jar from ./libs with a flat dir repository
-    // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
-    // The group id is ignored when searching -- in this case, it is "blank"
-    // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
+// Example mod dependency using a mod jar from ./libs with a flat dir repository
+// This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
+// The group id is ignored when searching -- in this case, it is "blank"
+// implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
 
-    // For more info:
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+// For more info:
+// http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+// http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
