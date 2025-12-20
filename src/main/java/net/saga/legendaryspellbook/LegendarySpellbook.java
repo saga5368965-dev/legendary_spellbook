@@ -21,8 +21,11 @@ public class LegendarySpellbook {
 
     public LegendarySpellbook() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
         modEventBus.addListener(this::commonSetup);
+
         ModSpells.register(modEventBus);
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 

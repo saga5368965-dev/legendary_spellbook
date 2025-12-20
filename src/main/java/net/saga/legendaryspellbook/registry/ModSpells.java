@@ -6,7 +6,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.saga.legendaryspellbook.LegendarySpellbook;
-import net.saga.legendaryspellbook.Spells.ElectricBurstWaveSpell;
+import net.saga.legendaryspellbook.Spells.lightning.ElectricBurstWaveSpell;
 
 public class ModSpells {
     public static final DeferredRegister<AbstractSpell> SPELLS =
@@ -16,8 +16,6 @@ public class ModSpells {
     public static void register(IEventBus eventBus) {
         SPELLS.register(eventBus);
     }
-
     // 呪文の登録
-    public static final RegistryObject<AbstractSpell> ELECTRIC_BURST_WAVE =
-            SPELLS.register("electric_burst_wave", ElectricBurstWaveSpell::new);
+    public static final RegistryObject<AbstractSpell> ELECTRIC_BURST_WAVE = SPELLS.register("electric_burst_wave", () -> new ElectricBurstWaveSpell());
 }
