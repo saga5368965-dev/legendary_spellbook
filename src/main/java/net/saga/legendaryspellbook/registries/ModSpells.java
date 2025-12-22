@@ -1,4 +1,4 @@
-package net.saga.legendaryspellbook.registry;
+package net.saga.legendaryspellbook.registries;
 
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
@@ -6,6 +6,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.saga.legendaryspellbook.LegendarySpellbook;
+import net.saga.legendaryspellbook.Spells.evocation.SummonHauntedArmySpell;
 import net.saga.legendaryspellbook.Spells.lightning.ElectricBurstWaveSpell;
 
 public class ModSpells {
@@ -18,4 +19,5 @@ public class ModSpells {
     }
     // 呪文の登録
     public static final RegistryObject<AbstractSpell> ELECTRIC_BURST_WAVE = SPELLS.register("electric_burst_wave", () -> new ElectricBurstWaveSpell());
+    public static final RegistryObject<AbstractSpell> SUMMON_HAUNTED_ARMY = SPELLS.register("summon_haunted_army", () -> new SummonHauntedArmySpell());
 }

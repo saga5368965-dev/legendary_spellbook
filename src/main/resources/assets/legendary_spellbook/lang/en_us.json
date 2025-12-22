@@ -1,0 +1,11 @@
+{
+  "spell.legendary_spellbook.electric_burst_wave": "Electric Burst Wave",
+  "spell.legendary_spellbook.electric_burst_wave.guide": "Unleashes a fan-shaped shockwave of electricity, electrocuting all enemies in its path.",
+  "spell.legendary_spellbook.summon_haunted_army": "Wraith Platoon",
+  "spell.legendary_spellbook.summon_haunted_army.desc": "The brave spirits of soldiers dwelling within the armor arise to protect you. Now, you are the General who leads them to victory!",
+  "entity.legendary_spellbook.summoned_haunted_guard": "Summoned Haunted Guard",
+  "entity.legendary_spellbook.summoned_haunted_knight": "Summoned Haunted Knight",
+  "effect.legendary_spellbook.haunted_army_timer": "Wraith Platoon Timer",
+  "ui.legendary_spellbook.bolts_count": "Bolts: %s",
+  "ui.legendary_spellbook.lifetime": "Duration: %s sec"
+}

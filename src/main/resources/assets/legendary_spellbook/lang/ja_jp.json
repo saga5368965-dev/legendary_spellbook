@@ -1,4 +1,11 @@
 {
-  "spell.legendary_spellbook.electric_burst_wave": "エレクトリック・バースト・ウェーブ",
-  "spell.legendary_spellbook.electric_burst_wave.guide": "扇状に広がる電撃の衝撃波を放ち、敵を感電させる。"
+  "spell.legendary_spellbook.electric_burst_wave": "電撃波",
+  "spell.legendary_spellbook.electric_burst_wave.guide": "扇状に広がる電撃の衝撃波を放ち、敵を感電させます。",
+  "spell.legendary_spellbook.summon_haunted_army": "亡霊の軍隊",
+  "spell.legendary_spellbook.summon_haunted_army.desc": "鎧に宿る勇敢な兵士たちの魂が、あなたを守るために立ち上がります。今、あなたは彼らを勝利へと導く将軍となります！",
+  "entity.legendary_spellbook.summoned_haunted_guard": "召喚された亡霊の衛兵",
+  "entity.legendary_spellbook.summoned_haunted_knight": "召喚された亡霊の騎士",
+  "effect.legendary_spellbook.haunted_army_timer": "召喚された兵士の消滅まで",
+  "ui.legendary_spellbook.bolts_count": "雷の数: %s",
+  "ui.legendary_spellbook.lifetime": "持続時間: %s秒"
 }

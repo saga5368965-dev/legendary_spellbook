@@ -1,12 +1,14 @@
 package net.saga.legendaryspellbook;
 
 import com.mojang.logging.LogUtils;
-import net.saga.legendaryspellbook.registry.ModSpells;
+import net.saga.legendaryspellbook.registries.ModMobEffects;
+import net.saga.legendaryspellbook.registries.ModSpells;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.saga.legendaryspellbook.registries.ModEntities;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -21,12 +23,11 @@ public class LegendarySpellbook {
 
     public LegendarySpellbook() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        modEventBus.addListener(this::commonSetup);
-
-        ModSpells.register(modEventBus);
-
         MinecraftForge.EVENT_BUS.register(this);
+        ModEntities.ENTITIES.register(modEventBus);
+        ModMobEffects.MOB_EFFECTS.register(modEventBus);
+        modEventBus.addListener(this::commonSetup);
+        ModSpells.register(modEventBus);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

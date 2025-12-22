@@ -1,70 +1,104 @@
 package net.saga.legendaryspellbook.Spells.lightning;
 
-import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
-import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
-import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
+import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
-import io.redspace.ironsspellbooks.api.spells.CastSource;
-import io.redspace.ironsspellbooks.api.spells.CastType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.ElectricityEntity;
-import net.minecraft.sounds.SoundEvents;
+import net.saga.legendaryspellbook.LegendarySpellbook;
+
+import java.util.List;
 import java.util.Optional;
 
+@AutoSpellConfig
+public class ElectricBurstWaveSpell extends AbstractSpell {
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(LegendarySpellbook.MODID, "electric_burst_wave");
 
- public class ElectricBurstWaveSpell extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath("legendary_spellbook", "electric_burst_wave");
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.LEGENDARY)
             .setSchoolResource(SchoolRegistry.LIGHTNING_RESOURCE)
-            .setMaxLevel(3)
-            .setCooldownSeconds(20)
+            .setMaxLevel(4)
+            .setCooldownSeconds(10)
             .build();
+
     public ElectricBurstWaveSpell() {
-        this.manaCostPerLevel = 25;
-        this.baseSpellPower = 15;
-        this.spellPowerPerLevel = 5;
-        this.castTime =20;
+        this.manaCostPerLevel = 15;
+        this.baseSpellPower = 25;
+        this.spellPowerPerLevel = 7;
+        this.castTime = 20;
         this.baseManaCost = 120;
     }
+
+    // --- 【共通計算メソッド】 ---
+    private int getBoltsCount(int spellLevel) {
+        return 3 + (spellLevel * 4);
+    }
+
+    private float getDamage(int spellLevel, LivingEntity caster) {
+        return getSpellPower(spellLevel, caster);
+    }
+
+    private float getLifeTime(int spellLevel) {
+        return 35.0F + (spellLevel * 15.0F);
+    }
+
+    // --- 【スペック情報の表示】 ---
+    @Override
+    public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
+        return List.of(
+                // ダメージ
+                Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getDamage(spellLevel, caster), 1)),
+                // 波の数（独自の翻訳キー）
+                Component.translatable("ui.legendary_spellbook.bolts_count", getBoltsCount(spellLevel)),
+                // 持続時間（独自の翻訳キー）
+                Component.translatable("ui.legendary_spellbook.lifetime", Utils.stringTruncation(getLifeTime(spellLevel) / 20.0F, 1))
+        );
+    }
+
     @Override
     public DefaultConfig getDefaultConfig() {
         return this.defaultConfig;
     }
+
     @Override
     public ResourceLocation getSpellResource() {
         return spellId;
     }
+
     @Override
     public Optional<SoundEvent> getCastStartSound() {
-        // 溜め時間はそのまま（またはお好みで変更）
-        return Optional.of(SoundRegistry.DIVINE_SMITE_WINDUP.get());
+        return Optional.of(SoundRegistry.LIGHTNING_LANCE_CAST.get());
     }
+
     @Override
     public Optional<SoundEvent> getCastFinishSound() {
-        // ウィザーの弾の発射音に変更
         return Optional.of(SoundEvents.WITHER_SHOOT);
     }
-     @Override
-     public CastType getCastType() {
-         return CastType.LONG;
-     }
+
+    @Override
+    public CastType getCastType() {
+        return CastType.LONG;
+    }
+
     @Override
     public void onCast(Level world, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
-        int boltsCount = 3 + (spellLevel * 1);
+        // 共通メソッドから数値を流用
+        int boltsCount = getBoltsCount(spellLevel);
+        float baseDamage = getDamage(spellLevel, entity);
+        float lifeTime = getLifeTime(spellLevel);
+
         float spreadAngle = 30.0F + (spellLevel * 10.0F);
         float angleStep = spreadAngle / Math.max(1, boltsCount - 1);
-
-        // 修正1: playerMagicDataをRandomSourceにキャストせず、entityから取得
-        float baseDamage = this.baseSpellPower + (spellLevel - 1) * this.spellPowerPerLevel;
-        float lifeTime = 30.0F + (spellLevel * 5.0F);
         float playerRot = entity.getYRot();
 
         for (int i = 0; i < boltsCount; i++) {
@@ -75,17 +109,10 @@ import java.util.Optional;
             double dz = Math.cos(rad);
 
             ElectricityEntity bolt = new ElectricityEntity(
-                    entity,
-                    dx,
-                    0.0,
-                    dz,
-                    world,
-                    baseDamage,
-                    currentAngle,
-                    lifeTime
+                    entity, dx, 0.0, dz, world,
+                    baseDamage, currentAngle, lifeTime
             );
 
-            // 出現位置をプレイヤーの少し前に設定
             double spawnX = entity.getX() + dx * 1.5;
             double spawnY = entity.getY() + 0.5;
             double spawnZ = entity.getZ() + dz * 1.5;
