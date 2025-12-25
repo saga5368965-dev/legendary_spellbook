@@ -72,20 +72,16 @@ public class SummonHauntedArmySpell extends AbstractSpell {
     @Override
     public void onCast(Level world, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (world instanceof ServerLevel serverLevel) {
-            // タイマーの時間設定（10分）
             int summonTime = 20 * 60 * 10;
             float radius = 2.0f + 0.2f * spellLevel;
-
-            // 1. プレイヤー（自分）にタイマーを表示させる
             entity.addEffect(new MobEffectInstance(
                     ModMobEffects.HAUNTED_ARMY_TIMER.get(),
                     summonTime,
                     0,
-                    false, // ambient
-                    false, // visible
-                    true   // showIcon: これで画面右上にアイコンと残り時間が出る
+                    false,
+                    false,
+                    true
             ));
-            // 召喚数の計算: 基本6体 + 呪文レベル
             int summonCount = 6 + spellLevel;
 
             for (int i = 0; i < summonCount; i++) {
@@ -93,11 +89,8 @@ public class SummonHauntedArmySpell extends AbstractSpell {
                 Monster haunted = isKnight ? new SummonedHauntedKnight(world, entity) : new SummonedHauntedGuard(world, entity);
 
                 haunted.finalizeSpawn(serverLevel, world.getCurrentDifficultyAt(haunted.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
-
-                // 2. モンスター側にもエフェクトを付与（消滅判定用）
                 haunted.addEffect(new MobEffectInstance(ModMobEffects.HAUNTED_ARMY_TIMER.get(), summonTime, 0, false, false, false));
 
-                // 円形に配置するための計算（分母を summonCount に合わせることで均等に並ぶ）
                 Vec3 spawnPos = entity.position().add(new Vec3(radius, 0, 0).yRot((float) Math.toRadians(360f / summonCount * i)));
                 haunted.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
 
@@ -107,13 +100,11 @@ public class SummonHauntedArmySpell extends AbstractSpell {
         super.onCast(world, spellLevel, entity, castSource, playerMagicData);
     }
 
-    public List<MutableComponent> getUniqueSpellsText(int spellLevel) {
-        // 実際の召喚数（6 + レベル）を計算してツールチップに表示
+    @Override
+    public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         int summonCount = 6 + spellLevel;
-
         return List.of(
-                Component.translatable("ui.irons_spellbooks.summon_count", summonCount),
-                Component.translatable(String.format("spell.%s.%s.desc", LegendarySpellbook.MODID, "summon_haunted_army"))
+                Component.translatable("ui.irons_spellbooks.summon_count", summonCount)
         );
     }
 }

@@ -3,9 +3,15 @@
   "spell.legendary_spellbook.electric_burst_wave.guide": "Unleashes a fan-shaped shockwave of electricity, electrocuting all enemies in its path.",
   "spell.legendary_spellbook.summon_haunted_army": "Wraith Platoon",
   "spell.legendary_spellbook.summon_haunted_army.desc": "The brave spirits of soldiers dwelling within the armor arise to protect you. Now, you are the General who leads them to victory!",
+  "spell.legendary_spellbook.soul_end": "Soul End",
+  "spell.legendary_spellbook.soul_end.guide": "Condense soul energy into your weapon and strike the ground to release a devastating shockwave. Knocks back enemies and adds your weapon's damage to the spell power.",
+  "spell.legendary_spellbook.legendary_paladin_blessing": "Legendary Paladin's Blessing",
+  "spell.legendary_spellbook.legendary_paladin_blessing.desc": "Cloak yourself in an aura as heavy as Netherite, greatly increasing attack and casting speed. While active, every strike shatters enemy armor and causes severe bleeding.",
+  "effect.legendary_spellbook.legendary_paladin_blessing": "Legendary Paladin's Blessing",
   "entity.legendary_spellbook.summoned_haunted_guard": "Summoned Haunted Guard",
   "entity.legendary_spellbook.summoned_haunted_knight": "Summoned Haunted Knight",
   "effect.legendary_spellbook.haunted_army_timer": "Wraith Platoon Timer",
   "ui.legendary_spellbook.bolts_count": "Bolts: %s",
-  "ui.legendary_spellbook.lifetime": "Duration: %s sec"
+  "ui.legendary_spellbook.lifetime": "Duration: %s sec",
+  "spell.legendary_spellbook.soul_end.lifesteal": "+ Life Steal"
 }

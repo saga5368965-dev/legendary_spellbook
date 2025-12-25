@@ -13,14 +13,11 @@ public class HauntedArmyTimerEffect extends MobEffect {
 
     @Override
     public void removeAttributeModifiers(@NotNull LivingEntity entity, @NotNull AttributeMap map, int amp) {
-        // タイマー終了時にサーバー側で消滅させる
         if (!entity.level().isClientSide) {
             entity.discard();
         }
         super.removeAttributeModifiers(entity, map, amp);
     }
-
-    // 1.20.1で必須のメソッド
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return true;

@@ -3,9 +3,15 @@
   "spell.legendary_spellbook.electric_burst_wave.guide": "扇状に広がる電撃の衝撃波を放ち、敵を感電させます。",
   "spell.legendary_spellbook.summon_haunted_army": "亡霊の軍隊",
   "spell.legendary_spellbook.summon_haunted_army.desc": "鎧に宿る勇敢な兵士たちの魂が、あなたを守るために立ち上がります。今、あなたは彼らを勝利へと導く将軍となります！",
+  "spell.legendary_spellbook.soul_end": "ソウル・エンド",
+  "spell.legendary_spellbook.soul_end.guide": "魂の力を武器に凝縮し、大地を砕く衝撃波を放つ。命中した敵を弾き飛ばし、武器の攻撃力に応じた追加ダメージを与える。",
+  "spell.legendary_spellbook.legendary_paladin_blessing": "伝説のパラディンの加護",
+  "spell.legendary_spellbook.legendary_paladin_blessing.desc": "ネザライトの如き重圧を纏い、攻撃速度と詠唱能力を極限まで高める。この加護の下では、あらゆる攻撃が敵の防具を砕き、出血を強いる。",
+  "effect.legendary_spellbook.legendary_paladin_blessing": "伝説のパラディンの加護",
   "entity.legendary_spellbook.summoned_haunted_guard": "召喚された亡霊の衛兵",
   "entity.legendary_spellbook.summoned_haunted_knight": "召喚された亡霊の騎士",
   "effect.legendary_spellbook.haunted_army_timer": "召喚された兵士の消滅まで",
   "ui.legendary_spellbook.bolts_count": "雷の数: %s",
-  "ui.legendary_spellbook.lifetime": "持続時間: %s秒"
+  "ui.legendary_spellbook.lifetime": "持続時間: %s秒",
+  "spell.legendary_spellbook.soul_end.lifesteal": "+ 吸血効果"
 }

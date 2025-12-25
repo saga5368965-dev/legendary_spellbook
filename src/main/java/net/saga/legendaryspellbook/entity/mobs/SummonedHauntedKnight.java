@@ -38,34 +38,34 @@ public class SummonedHauntedKnight extends HauntedKnightEntity implements MagicS
 
     @Override
     protected void registerGoals() {
+        // 元の敵対的なターゲットAI（誰彼構わず襲うAI）を削除
         this.targetSelector.getAvailableGoals().removeIf(goal ->
                 goal.getGoal() instanceof HurtByTargetGoal ||
                         goal.getGoal() instanceof NearestAttackableTargetGoal
         );
 
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(5, new GenericFollowOwnerGoal(this, this::getSummoner, 1.0f, 10, 2, true, 50));
+        this.goalSelector.addGoal(5, new GenericFollowOwnerGoal(this, this::getSummoner, 1.0f, 10, 2, true, 15));
+
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 8.0F, 1.0F));
 
         this.targetSelector.addGoal(1, new GenericOwnerHurtByTargetGoal(this, this::getSummoner));
         this.targetSelector.addGoal(2, new GenericOwnerHurtTargetGoal(this, this::getSummoner));
         this.targetSelector.addGoal(3, new GenericCopyOwnerTargetGoal(this, this::getSummoner));
         this.targetSelector.addGoal(4, (new GenericHurtByTargetGoal(this, (entity) -> entity == getSummoner())).setAlertOthers());
-
         super.registerGoals();
+    }
+    @Override
+    public boolean hurt(@NotNull DamageSource pSource, float pAmount) {
+        if (shouldIgnoreDamage(pSource)) {
+            return false;
+        }
+        return super.hurt(pSource, pAmount);
     }
 
     @Override
     public boolean isAlliedTo(@NotNull Entity entityIn) {
-        if (entityIn == this) {
-            return true;
-        } else if (entityIn == getSummoner() || this.isAlliedHelper(entityIn)) {
-            return true;
-        } else if (getSummoner() != null && !entityIn.isAlliedTo(getSummoner())) {
-            return false;
-        } else {
-            return this.getTeam() == null && entityIn.getTeam() == null;
-        }
+        return entityIn == this || this.isAlliedHelper(entityIn) || super.isAlliedTo(entityIn);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class SummonedHauntedKnight extends HauntedKnightEntity implements MagicS
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         OwnerHelper.serializeOwner(tag, summonerUUID);
     }

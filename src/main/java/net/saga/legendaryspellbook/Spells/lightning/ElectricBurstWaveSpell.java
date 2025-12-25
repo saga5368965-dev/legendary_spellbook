@@ -39,7 +39,6 @@ public class ElectricBurstWaveSpell extends AbstractSpell {
         this.baseManaCost = 120;
     }
 
-    // --- 【共通計算メソッド】 ---
     private int getBoltsCount(int spellLevel) {
         return 3 + (spellLevel * 4);
     }
@@ -52,15 +51,11 @@ public class ElectricBurstWaveSpell extends AbstractSpell {
         return 35.0F + (spellLevel * 15.0F);
     }
 
-    // --- 【スペック情報の表示】 ---
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
-                // ダメージ
                 Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getDamage(spellLevel, caster), 1)),
-                // 波の数（独自の翻訳キー）
                 Component.translatable("ui.legendary_spellbook.bolts_count", getBoltsCount(spellLevel)),
-                // 持続時間（独自の翻訳キー）
                 Component.translatable("ui.legendary_spellbook.lifetime", Utils.stringTruncation(getLifeTime(spellLevel) / 20.0F, 1))
         );
     }
@@ -92,7 +87,6 @@ public class ElectricBurstWaveSpell extends AbstractSpell {
 
     @Override
     public void onCast(Level world, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
-        // 共通メソッドから数値を流用
         int boltsCount = getBoltsCount(spellLevel);
         float baseDamage = getDamage(spellLevel, entity);
         float lifeTime = getLifeTime(spellLevel);

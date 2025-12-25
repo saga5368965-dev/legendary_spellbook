@@ -139,8 +139,8 @@ repositories {
     }
     // 3. ISS用
     maven {
-        name = "Iron's Maven - Release"
-        url = "https://code.redspace.io/releases"
+        name = "redspaceReleases"
+        url = uri("https://code.redspace.io/releases")
     }
     maven { url = "https://maven.minecraftforge.net" }
 

@@ -9,7 +9,6 @@ import net.saga.legendaryspellbook.entity.mobs.SummonedHauntedGuard;
 import net.saga.legendaryspellbook.entity.mobs.SummonedHauntedKnight;
 
 public class ModEntities {
-    // ここ！ "legendary_spellbook" が mods.toml の modId と 100% 一致している必要があります
     public static final DeferredRegister<EntityType<?>> ENTITIES =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, "legendary_spellbook");
 
